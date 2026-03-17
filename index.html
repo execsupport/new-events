@@ -53,8 +53,6 @@
   .btn{font-family:var(--jp);font-weight:500;font-size:.8rem;letter-spacing:.05em;padding:14px 40px;border:none;border-radius:2px;cursor:pointer;transition:all .3s ease}
   .btn-primary{background:var(--accent);color:var(--white)}.btn-primary:hover{background:var(--accent-hover);transform:translateY(-1px)}
   .btn-secondary{background:transparent;color:var(--mid-gray);border:1px solid var(--cream)}.btn-secondary:hover{border-color:var(--warm-gray);color:var(--charcoal)}
-
-  /* Output overlay */
   .output-overlay{position:fixed;inset:0;background:rgba(26,24,22,.5);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;z-index:1000;opacity:0;pointer-events:none;transition:opacity .4s ease}
   .output-overlay.active{opacity:1;pointer-events:all}
   .output-card{background:var(--white);border-radius:2px;padding:48px;max-width:600px;width:90%;max-height:85vh;overflow-y:auto;position:relative}
@@ -65,8 +63,6 @@
   .output-sub-title{font-family:var(--jp);font-weight:500;font-size:.82rem;color:var(--accent);margin:20px 0 8px}
   .copy-btn{display:inline-flex;align-items:center;gap:6px;margin-top:24px;padding:10px 24px;font-family:var(--jp);font-size:.78rem;font-weight:500;color:var(--accent);background:transparent;border:1px solid var(--accent-light);border-radius:2px;cursor:pointer;transition:all .2s ease}
   .copy-btn:hover{background:rgba(184,146,106,.06)}.copy-btn.copied{color:var(--success);border-color:var(--success)}
-
-  /* Time picker */
   .time-picker-wrap{position:relative}
   .time-display{width:100%;padding:10px 14px;font-family:var(--sans);font-weight:300;font-size:.85rem;color:var(--deep);background:var(--white);border:1px solid var(--cream);border-radius:2px;cursor:pointer;user-select:none;transition:border-color .3s ease,box-shadow .3s ease;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M3 5l3 3 3-3' fill='none' stroke='%238A8580' stroke-width='1.5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
   .time-display:focus,.time-display.active{border-color:var(--accent-light);box-shadow:0 0 0 3px rgba(184,146,106,.08)}
@@ -77,7 +73,6 @@
   .time-option:hover{background:var(--off-white)}.time-option.selected{background:rgba(184,146,106,.1);color:var(--accent);font-weight:400}
   .yen-suffix{position:relative}.yen-suffix input{padding-right:28px}
   .yen-suffix::after{content:'円';position:absolute;right:14px;top:50%;transform:translateY(-50%);font-family:var(--jp);font-size:.8rem;color:var(--mid-gray);pointer-events:none}
-
   @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
   @media(max-width:600px){.form-wrap{padding:32px 20px 60px}.header{padding:32px 20px 0}.row-2,.row-3{grid-template-columns:1fr}.lesson-block{padding:16px}.output-card{padding:32px 24px}.actions{flex-direction:column}.btn{width:100%;text-align:center}.toggle-group{flex-wrap:wrap}}
 </style>
@@ -93,7 +88,6 @@
 
 <div class="form-wrap">
 
-  <!-- 01 Basic Info -->
   <div class="form-section">
     <div class="section-label">01 — Basic Information</div>
     <div class="field"><div class="field-label">イベント名 <span class="req">必須</span></div><input type="text" id="eventName"></div>
@@ -117,14 +111,13 @@
     </div>
   </div>
 
-  <!-- 02 Lesson Content -->
   <div class="form-section">
     <div class="section-label">02 — Lesson Content</div>
     <div class="lesson-block">
       <div class="lesson-number">1</div><div class="lesson-title">第1部</div>
       <div class="row row-3">
         <div class="field"><div class="field-label">開始時間</div><div class="time-picker-wrap" id="tp-lesson1" data-center="14:00"></div></div>
-        <div class="field"><div class="field-label">セッション</div><select id="lesson1Session"><option value="" disabled selected>--</option><option>45min</option><option>60min</option><option>90min</option><option>120min</option></select></div>
+        <div class="field"><div class="field-label">セッション</div><select id="lesson1Session"><option value="" disabled selected>--</option><option>45min</option><option>60min</option><option>75min</option><option>90min</option><option>120min</option></select></div>
         <div class="field"><div class="field-label">定員</div><input type="number" id="lesson1Cap" min="1"></div>
       </div>
       <div class="field"><div class="field-label">レッスン内容</div><textarea id="lesson1Desc" rows="2"></textarea></div>
@@ -133,7 +126,7 @@
       <div class="lesson-number">2</div><div class="lesson-title">第2部</div>
       <div class="row row-3">
         <div class="field"><div class="field-label">開始時間</div><div class="time-picker-wrap" id="tp-lesson2" data-center="17:00"></div></div>
-        <div class="field"><div class="field-label">セッション</div><select id="lesson2Session"><option value="" disabled selected>--</option><option>45min</option><option>60min</option><option>90min</option><option>120min</option></select></div>
+        <div class="field"><div class="field-label">セッション</div><select id="lesson2Session"><option value="" disabled selected>--</option><option>45min</option><option>60min</option><option>75min</option><option>90min</option><option>120min</option></select></div>
         <div class="field"><div class="field-label">定員</div><input type="number" id="lesson2Cap" min="1"></div>
       </div>
       <div class="field"><div class="field-label">レッスン内容</div><textarea id="lesson2Desc" rows="2"></textarea></div>
@@ -142,14 +135,13 @@
       <div class="lesson-number">3</div><div class="lesson-title">第3部</div>
       <div class="row row-3">
         <div class="field"><div class="field-label">開始時間</div><div class="time-picker-wrap" id="tp-lesson3" data-center="15:30"></div></div>
-        <div class="field"><div class="field-label">セッション</div><select id="lesson3Session"><option value="" disabled selected>--</option><option>45min</option><option>60min</option><option>90min</option><option>120min</option></select></div>
+        <div class="field"><div class="field-label">セッション</div><select id="lesson3Session"><option value="" disabled selected>--</option><option>45min</option><option>60min</option><option>75min</option><option>90min</option><option>120min</option></select></div>
         <div class="field"><div class="field-label">定員</div><input type="number" id="lesson3Cap" min="1"></div>
       </div>
       <div class="field"><div class="field-label">レッスン内容</div><textarea id="lesson3Desc" rows="2"></textarea></div>
     </div>
   </div>
 
-  <!-- 03 Pricing -->
   <div class="form-section">
     <div class="section-label">03 — Pricing</div>
     <div class="field">
@@ -166,7 +158,6 @@
     </div>
   </div>
 
-  <!-- 04 Options -->
   <div class="form-section">
     <div class="section-label">04 — Options</div>
     <div class="row row-2">
@@ -201,13 +192,11 @@
     </div>
   </div>
 
-  <!-- 05 Release Date -->
   <div class="form-section">
     <div class="section-label">05 — Release Date</div>
     <div class="field"><div class="field-label">情報解禁日</div><input type="date" id="releaseDate"></div>
   </div>
 
-  <!-- 06 Notes -->
   <div class="form-section">
     <div class="section-label">06 — Notes</div>
     <div class="field"><div class="field-label">備考</div><textarea id="notes" rows="3"></textarea></div>
@@ -219,7 +208,6 @@
   </div>
 </div>
 
-<!-- Output overlay — clean preview + copy only -->
 <div class="output-overlay" id="outputOverlay">
   <div class="output-card">
     <button class="output-close" onclick="closeOutput()">&times;</button>
@@ -233,12 +221,10 @@
 </div>
 
 <script>
-// ── Yen formatting ──
 function formatYen(v){const n=v.replace(/[^\d]/g,'');return n?Number(n).toLocaleString('ja-JP'):'';}
 function formatYenDisplay(v){const f=formatYen(v);return f?f+'円':'';}
 document.querySelectorAll('.yen-input').forEach(i=>{i.addEventListener('input',function(){const p=this.selectionStart,b=this.value.length;this.value=formatYen(this.value);const a=this.value.length;this.setSelectionRange(p+(a-b),p+(a-b));});});
 
-// ── Time picker ──
 const allTimes=[];for(let h=0;h<24;h++)for(let m=0;m<60;m+=15)allTimes.push(`${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`);
 function initTimePicker(w){
   const c=w.getAttribute('data-center')||'12:00';w._value='';
@@ -257,7 +243,6 @@ document.querySelectorAll('.time-picker-wrap').forEach(initTimePicker);
 function getTP(id){const w=document.getElementById(id);return w?(w._value||''):'';}
 function resetTP(id){const w=document.getElementById(id);if(!w)return;w._value='';const d=w.querySelector('.time-display');d.textContent='--:--';d.classList.add('empty');w.querySelectorAll('.time-option').forEach(o=>o.classList.remove('selected'));}
 
-// ── Handlers ──
 function handleVenueChange(){const w=document.getElementById('venueOtherWrap');if(document.getElementById('venueSelect').value==='__other__'){w.classList.add('show');document.getElementById('venueOther').focus();}else{w.classList.remove('show');document.getElementById('venueOther').value='';}}
 function handleUketsukeChange(){const w=document.getElementById('externalUrlWrap');if(document.getElementById('uketsukeExternal').checked){w.classList.add('show');document.getElementById('eventUrl').focus();}else{w.classList.remove('show');document.getElementById('eventUrl').value='';}}
 function handlePriceOther(){const w=document.getElementById('priceOtherWrap');if(document.getElementById('priceOther').checked){w.classList.add('show');document.getElementById('priceOtherInput').focus();}else{w.classList.remove('show');document.getElementById('priceOtherInput').value='';}}
@@ -272,7 +257,6 @@ function getPrices(){
 function getVenue(){const v=document.getElementById('venueSelect').value;return v==='__other__'?gv('venueOther'):v;}
 function getUketsuke(){const t=gr('uketsuke');if(t==='外部サイト'){const u=gv('eventUrl');return u?`外部サイト (${u})`:'外部サイト';}return 'クレヨガ';}
 
-// Store plain text for copy
 let _plainText='';
 
 function generateOutput(){
@@ -282,7 +266,6 @@ function generateOutput(){
   const lessons=[];
   for(let i=1;i<=3;i++){const time=getTP(`tp-lesson${i}`),sess=gv(`lesson${i}Session`),cap=gv(`lesson${i}Cap`),desc=gv(`lesson${i}Desc`);if(time||desc)lessons.push({part:i,time,sess,cap,desc});}
 
-  // Build HTML preview
   let h='';
   const items=[['イベント名',name],['開催日',date],['開催場所',venue],['受付サイト',uketsuke],['マット',mat]];
   if(rel)items.push(['情報解禁日',rel]);
@@ -303,7 +286,6 @@ function generateOutput(){
   if(notes){h+=`<div class="output-sub-title">備考</div><div class="output-item"><span class="output-val" style="text-align:left">${notes}</span></div>`;}
   document.getElementById('outputContent').innerHTML=h;
 
-  // Build plain text (hidden, for copy)
   let p=`イベント名: ${name}\n開催日: ${date}\n開催場所: ${venue}\n受付サイト: ${uketsuke}\nマット: ${mat}\n`;
   if(rel)p+=`情報解禁日: ${rel}\n`;
   if(prices.length){p+=`\n参加費:\n`;prices.forEach(x=>p+=`  ${x}\n`);}
@@ -311,7 +293,6 @@ function generateOutput(){
   if(enkai==='あり'){p+=`\n宴会: あり\n`;const ep=gv('enkaiPlace'),et=getTP('tp-enkai'),ec=gv('enkaiCap'),ef=gv('enkaiFee');if(ep)p+=`  場所: ${ep}\n`;if(et)p+=`  開始時間: ${et}\n`;if(ec)p+=`  定員: ${ec}名\n`;if(ef)p+=`  参加費: ${formatYenDisplay(ef)}\n`;}else{p+=`宴会: なし\n`;}
   if(notes)p+=`\n備考: ${notes}\n`;
   _plainText=p;
-
   document.getElementById('outputOverlay').classList.add('active');
 }
 
