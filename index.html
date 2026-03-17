@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>クレヨガ — 新規イベント情報</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Noto+Sans+JP:wght@200;300;400;500;600&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  :root{--white:#FAFAFA;--off-white:#F5F3F0;--cream:#EDE9E3;--warm-gray:#C8C2B8;--mid-gray:#8A8580;--charcoal:#3D3A37;--deep:#1A1816;--accent:#B8926A;--accent-light:#D4BFA6;--accent-hover:#A07D58;--serif:'Cormorant Garamond',Georgia,serif;--sans:'DM Sans','Noto Sans JP',sans-serif;--jp:'Noto Sans JP',sans-serif;--success:#6B8F6B}
+  *{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth;font-size:16px}
+  body{background:var(--white);color:var(--charcoal);font-family:var(--sans);font-weight:300;line-height:1.8;-webkit-font-smoothing:antialiased;min-height:100vh}
+  .header{padding:48px 40px 0;text-align:center;opacity:0;animation:fadeUp .8s ease .1s forwards}
+  .header-brand{font-family:var(--serif);font-weight:300;font-size:.7rem;letter-spacing:.35em;text-transform:uppercase;color:var(--warm-gray);margin-bottom:8px}
+  .header-title{font-family:var(--serif);font-weight:300;font-size:clamp(1.4rem,3vw,2rem);color:var(--deep);line-height:1.5}
+  .header-sub{font-family:var(--jp);font-weight:200;font-size:.8rem;color:var(--mid-gray);margin-top:8px}
+  .header-line{width:48px;height:1px;background:var(--warm-gray);margin:32px auto 0}
+  .form-wrap{max-width:720px;margin:0 auto;padding:48px 40px 80px}
+  .form-section{margin-bottom:48px;opacity:0;animation:fadeUp .6s ease forwards}
+  .form-section:nth-child(1){animation-delay:.2s}.form-section:nth-child(2){animation-delay:.3s}.form-section:nth-child(3){animation-delay:.4s}.form-section:nth-child(4){animation-delay:.5s}.form-section:nth-child(5){animation-delay:.6s}.form-section:nth-child(6){animation-delay:.7s}.form-section:nth-child(7){animation-delay:.8s}
+  .section-label{font-family:var(--serif);font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);margin-bottom:20px;display:flex;align-items:center;gap:12px}
+  .section-label::after{content:'';flex:1;height:1px;background:var(--cream)}
+  .field{margin-bottom:20px}
+  .field-label{font-family:var(--jp);font-weight:400;font-size:.8rem;color:var(--charcoal);margin-bottom:6px;display:flex;align-items:center;gap:8px}
+  .field-label .req{font-size:.6rem;color:var(--accent);font-weight:500;letter-spacing:.05em}
+  .field-hint{font-size:.7rem;color:var(--mid-gray);margin-bottom:6px}
+  input[type="text"],input[type="date"],input[type="time"],input[type="number"],input[type="url"],textarea,select{width:100%;padding:10px 14px;font-family:var(--sans);font-weight:300;font-size:.85rem;color:var(--deep);background:var(--white);border:1px solid var(--cream);border-radius:2px;outline:none;transition:border-color .3s ease,box-shadow .3s ease}
+  input:focus,textarea:focus,select:focus{border-color:var(--accent-light);box-shadow:0 0 0 3px rgba(184,146,106,.08)}
+  textarea{resize:vertical;min-height:64px}
+  select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M3 5l3 3 3-3' fill='none' stroke='%238A8580' stroke-width='1.5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;cursor:pointer}
+  .row{display:grid;gap:16px}.row-2{grid-template-columns:1fr 1fr}.row-3{grid-template-columns:1fr 1fr 1fr}
+  .conditional-field{margin-top:8px;max-height:0;overflow:hidden;opacity:0;transition:max-height .3s ease,opacity .3s ease}
+  .conditional-field.show{max-height:80px;opacity:1}
+  .lesson-block{background:var(--off-white);border:1px solid var(--cream);border-radius:2px;padding:24px;margin-bottom:16px;position:relative;transition:border-color .3s ease}
+  .lesson-block:hover{border-color:var(--accent-light)}
+  .lesson-number{font-family:var(--serif);font-size:1.6rem;font-weight:300;color:var(--accent-light);position:absolute;top:16px;right:20px;line-height:1}
+  .lesson-title{font-family:var(--jp);font-weight:500;font-size:.85rem;color:var(--deep);margin-bottom:16px}
+  .toggle-group{display:flex;border:1px solid var(--cream);border-radius:2px;overflow:hidden;width:fit-content}
+  .toggle-group label{padding:8px 20px;font-family:var(--jp);font-weight:400;font-size:.8rem;color:var(--mid-gray);cursor:pointer;transition:all .3s ease;border-right:1px solid var(--cream);user-select:none}
+  .toggle-group label:last-child{border-right:none}
+  .toggle-group input{display:none}
+  .toggle-group input:checked+label{background:var(--accent);color:var(--white);font-weight:500}
+  .checkbox-group{display:flex;flex-wrap:wrap;gap:12px}
+  .checkbox-item{display:flex;align-items:center;gap:8px;cursor:pointer}
+  .checkbox-item input[type="checkbox"]{appearance:none;width:18px;height:18px;border:1px solid var(--warm-gray);border-radius:2px;cursor:pointer;position:relative;transition:all .2s ease;flex-shrink:0}
+  .checkbox-item input[type="checkbox"]:checked{background:var(--accent);border-color:var(--accent)}
+  .checkbox-item input[type="checkbox"]:checked::after{content:'';position:absolute;top:3px;left:6px;width:4px;height:8px;border:solid var(--white);border-width:0 1.5px 1.5px 0;transform:rotate(45deg)}
+  .checkbox-item span{font-family:var(--jp);font-size:.8rem;color:var(--charcoal)}
+  .enkai-details{max-height:0;overflow:hidden;transition:max-height .5s ease,opacity .4s ease,margin .4s ease;opacity:0;margin-top:0}
+  .enkai-details.open{max-height:400px;opacity:1;margin-top:20px}
+  .enkai-inner{background:var(--off-white);border:1px solid var(--cream);border-radius:2px;padding:24px}
+  .enkai-inner .field{margin-bottom:14px}.enkai-inner .field:last-child{margin-bottom:0}
+  .actions{display:flex;gap:16px;margin-top:48px;padding-top:32px;border-top:1px solid var(--cream)}
+  .btn{font-family:var(--jp);font-weight:500;font-size:.8rem;letter-spacing:.05em;padding:14px 40px;border:none;border-radius:2px;cursor:pointer;transition:all .3s ease}
+  .btn-primary{background:var(--accent);color:var(--white)}.btn-primary:hover{background:var(--accent-hover);transform:translateY(-1px)}
+  .btn-secondary{background:transparent;color:var(--mid-gray);border:1px solid var(--cream)}.btn-secondary:hover{border-color:var(--warm-gray);color:var(--charcoal)}
+
+  /* Output overlay */
+  .output-overlay{position:fixed;inset:0;background:rgba(26,24,22,.5);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;z-index:1000;opacity:0;pointer-events:none;transition:opacity .4s ease}
+  .output-overlay.active{opacity:1;pointer-events:all}
+  .output-card{background:var(--white);border-radius:2px;padding:48px;max-width:600px;width:90%;max-height:85vh;overflow-y:auto;position:relative}
+  .output-card .section-label{margin-bottom:24px}
+  .output-close{position:absolute;top:20px;right:20px;background:none;border:none;font-size:1.2rem;color:var(--mid-gray);cursor:pointer;transition:color .2s}.output-close:hover{color:var(--deep)}
+  .output-item{padding:8px 0;border-bottom:1px solid var(--cream);display:flex;justify-content:space-between;font-size:.82rem}.output-item:last-child{border-bottom:none}
+  .output-key{color:var(--mid-gray);font-weight:400;min-width:120px}.output-val{color:var(--deep);text-align:right;flex:1}
+  .output-sub-title{font-family:var(--jp);font-weight:500;font-size:.82rem;color:var(--accent);margin:20px 0 8px}
+  .copy-btn{display:inline-flex;align-items:center;gap:6px;margin-top:24px;padding:10px 24px;font-family:var(--jp);font-size:.78rem;font-weight:500;color:var(--accent);background:transparent;border:1px solid var(--accent-light);border-radius:2px;cursor:pointer;transition:all .2s ease}
+  .copy-btn:hover{background:rgba(184,146,106,.06)}.copy-btn.copied{color:var(--success);border-color:var(--success)}
+
+  /* Time picker */
+  .time-picker-wrap{position:relative}
+  .time-display{width:100%;padding:10px 14px;font-family:var(--sans);font-weight:300;font-size:.85rem;color:var(--deep);background:var(--white);border:1px solid var(--cream);border-radius:2px;cursor:pointer;user-select:none;transition:border-color .3s ease,box-shadow .3s ease;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M3 5l3 3 3-3' fill='none' stroke='%238A8580' stroke-width='1.5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center}
+  .time-display:focus,.time-display.active{border-color:var(--accent-light);box-shadow:0 0 0 3px rgba(184,146,106,.08)}
+  .time-display.empty{color:var(--warm-gray)}
+  .time-dropdown{position:absolute;top:calc(100% + 4px);left:0;right:0;background:var(--white);border:1px solid var(--cream);border-radius:2px;max-height:200px;overflow-y:auto;z-index:100;box-shadow:0 8px 24px rgba(26,24,22,.08);display:none}
+  .time-dropdown.open{display:block}
+  .time-option{padding:8px 14px;font-family:var(--sans);font-size:.85rem;font-weight:300;color:var(--charcoal);cursor:pointer;transition:background .15s ease}
+  .time-option:hover{background:var(--off-white)}.time-option.selected{background:rgba(184,146,106,.1);color:var(--accent);font-weight:400}
+  .yen-suffix{position:relative}.yen-suffix input{padding-right:28px}
+  .yen-suffix::after{content:'円';position:absolute;right:14px;top:50%;transform:translateY(-50%);font-family:var(--jp);font-size:.8rem;color:var(--mid-gray);pointer-events:none}
+
+  @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+  @media(max-width:600px){.form-wrap{padding:32px 20px 60px}.header{padding:32px 20px 0}.row-2,.row-3{grid-template-columns:1fr}.lesson-block{padding:16px}.output-card{padding:32px 24px}.actions{flex-direction:column}.btn{width:100%;text-align:center}.toggle-group{flex-wrap:wrap}}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-brand">YOSE</div>
+  <div class="header-title">New Event</div>
+  <div class="header-sub">新規イベント情報</div>
+  <div class="header-line"></div>
+</div>
+
+<div class="form-wrap">
+
+  <!-- 01 Basic Info -->
+  <div class="form-section">
+    <div class="section-label">01 — Basic Information</div>
+    <div class="field"><div class="field-label">イベント名 <span class="req">必須</span></div><input type="text" id="eventName"></div>
+    <div class="field"><div class="field-label">開催日 <span class="req">必須</span></div><input type="date" id="eventDate"></div>
+    <div class="field">
+      <div class="field-label">開催場所 <span class="req">必須</span></div>
+      <select id="venueSelect" onchange="handleVenueChange()">
+        <option value="" disabled selected>選択してください</option>
+        <option>IGNITE 下北</option><option>IGNITE 京都</option><option>INTEX 大阪</option><option>SETSUKO JUICE</option><option>代々木公園</option><option>桃谷スタジオ</option><option>長慶院</option><option>伝七邸</option><option>四日市中央緑地運動施設</option><option>長久寺</option><option>CLiP HIROSHIMA</option><option>参宮橋スタジオ</option><option>Grande Cielo Tokyo</option><option>HOT40YOGA 新潟黒埼店</option><option>新潟市黒埼市民会館</option><option>新潟市東区プラザ</option><option>新潟市天寿園</option><option>新潟市中央区</option><option>皇居周辺</option><option>オンライン</option>
+        <option value="__other__">その他（直接入力）</option>
+      </select>
+      <div class="conditional-field" id="venueOtherWrap"><input type="text" id="venueOther" placeholder="会場名を入力"></div>
+    </div>
+    <div class="field">
+      <div class="field-label">受付サイト</div>
+      <div class="toggle-group">
+        <input type="radio" name="uketsuke" id="uketsukeKure" value="クレヨガ" checked onchange="handleUketsukeChange()"><label for="uketsukeKure">クレヨガ</label>
+        <input type="radio" name="uketsuke" id="uketsukeExternal" value="外部サイト" onchange="handleUketsukeChange()"><label for="uketsukeExternal">外部サイト</label>
+      </div>
+      <div class="conditional-field" id="externalUrlWrap"><input type="url" id="eventUrl" placeholder="https://..."></div>
+    </div>
+  </div>
+
+  <!-- 02 Lesson Content -->
+  <div class="form-section">
+    <div class="section-label">02 — Lesson Content</div>
+    <div class="lesson-block">
+      <div class="lesson-number">1</div><div class="lesson-title">第1部</div>
+      <div class="row row-3">
+        <div class="field"><div class="field-label">開始時間</div><div class="time-picker-wrap" id="tp-lesson1" data-center="14:00"></div></div>
+        <div class="field"><div class="field-label">セッション</div><select id="lesson1Session"><option value="" disabled selected>--</option><option>45min</option><option>60min</option><option>90min</option><option>120min</option></select></div>
+        <div class="field"><div class="field-label">定員</div><input type="number" id="lesson1Cap" min="1"></div>
+      </div>
+      <div class="field"><div class="field-label">レッスン内容</div><textarea id="lesson1Desc" rows="2"></textarea></div>
+    </div>
+    <div class="lesson-block">
+      <div class="lesson-number">2</div><div class="lesson-title">第2部</div>
+      <div class="row row-3">
+        <div class="field"><div class="field-label">開始時間</div><div class="time-picker-wrap" id="tp-lesson2" data-center="17:00"></div></div>
+        <div class="field"><div class="field-label">セッション</div><select id="lesson2Session"><option value="" disabled selected>--</option><option>45min</option><option>60min</option><option>90min</option><option>120min</option></select></div>
+        <div class="field"><div class="field-label">定員</div><input type="number" id="lesson2Cap" min="1"></div>
+      </div>
+      <div class="field"><div class="field-label">レッスン内容</div><textarea id="lesson2Desc" rows="2"></textarea></div>
+    </div>
+    <div class="lesson-block">
+      <div class="lesson-number">3</div><div class="lesson-title">第3部</div>
+      <div class="row row-3">
+        <div class="field"><div class="field-label">開始時間</div><div class="time-picker-wrap" id="tp-lesson3" data-center="15:30"></div></div>
+        <div class="field"><div class="field-label">セッション</div><select id="lesson3Session"><option value="" disabled selected>--</option><option>45min</option><option>60min</option><option>90min</option><option>120min</option></select></div>
+        <div class="field"><div class="field-label">定員</div><input type="number" id="lesson3Cap" min="1"></div>
+      </div>
+      <div class="field"><div class="field-label">レッスン内容</div><textarea id="lesson3Desc" rows="2"></textarea></div>
+    </div>
+  </div>
+
+  <!-- 03 Pricing -->
+  <div class="form-section">
+    <div class="section-label">03 — Pricing</div>
+    <div class="field">
+      <div class="field-label">参加費 <span class="req">必須</span></div>
+      <div class="field-hint">複数選択可</div>
+      <div class="checkbox-group">
+        <label class="checkbox-item"><input type="checkbox" id="price1class" value="1クラス 5,000円"><span>1クラス 5,000円</span></label>
+        <label class="checkbox-item"><input type="checkbox" id="price2class" value="2クラス 8,000円"><span>2クラス 8,000円</span></label>
+        <label class="checkbox-item"><input type="checkbox" id="price3class" value="3クラス 12,000円"><span>3クラス 12,000円</span></label>
+        <label class="checkbox-item"><input type="checkbox" id="priceDonation" value="5,000円 + 寄付 500円"><span>5,000円 + 寄付 500円</span></label>
+        <label class="checkbox-item"><input type="checkbox" id="priceOther" value="__other__" onchange="handlePriceOther()"><span>その他</span></label>
+      </div>
+      <div class="conditional-field" id="priceOtherWrap"><div class="yen-suffix"><input type="text" id="priceOtherInput" class="yen-input" placeholder="例: 3,500" inputmode="numeric"></div></div>
+    </div>
+  </div>
+
+  <!-- 04 Options -->
+  <div class="form-section">
+    <div class="section-label">04 — Options</div>
+    <div class="row row-2">
+      <div class="field">
+        <div class="field-label">マット</div>
+        <div class="toggle-group">
+          <input type="radio" name="mat" id="matRental" value="貸出あり" checked><label for="matRental">貸出あり</label>
+          <input type="radio" name="mat" id="matNoRental" value="貸出なし"><label for="matNoRental">貸出なし</label>
+          <input type="radio" name="mat" id="matNotNeeded" value="持ち込み不要"><label for="matNotNeeded">持ち込み不要</label>
+        </div>
+      </div>
+      <div class="field">
+        <div class="field-label">宴会</div>
+        <div class="toggle-group">
+          <input type="radio" name="enkai" id="enkaiYes" value="あり" onchange="toggleEnkai()"><label for="enkaiYes">あり</label>
+          <input type="radio" name="enkai" id="enkaiNo" value="なし" checked onchange="toggleEnkai()"><label for="enkaiNo">なし</label>
+        </div>
+      </div>
+    </div>
+    <div class="enkai-details" id="enkaiDetails">
+      <div class="enkai-inner">
+        <div class="field-label" style="margin-bottom:12px;color:var(--accent);font-weight:500;">宴会の詳細</div>
+        <div class="row row-2">
+          <div class="field"><div class="field-label">場所</div><input type="text" id="enkaiPlace"></div>
+          <div class="field"><div class="field-label">開始時間</div><div class="time-picker-wrap" id="tp-enkai" data-center="19:00"></div></div>
+        </div>
+        <div class="row row-2">
+          <div class="field"><div class="field-label">定員</div><input type="number" id="enkaiCap" min="1"></div>
+          <div class="field"><div class="field-label">参加費</div><div class="yen-suffix"><input type="text" id="enkaiFee" class="yen-input" placeholder="例: 4,000" inputmode="numeric"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 05 Release Date -->
+  <div class="form-section">
+    <div class="section-label">05 — Release Date</div>
+    <div class="field"><div class="field-label">情報解禁日</div><input type="date" id="releaseDate"></div>
+  </div>
+
+  <!-- 06 Notes -->
+  <div class="form-section">
+    <div class="section-label">06 — Notes</div>
+    <div class="field"><div class="field-label">備考</div><textarea id="notes" rows="3"></textarea></div>
+  </div>
+
+  <div class="actions">
+    <button class="btn btn-primary" onclick="generateOutput()">出力する</button>
+    <button class="btn btn-secondary" onclick="resetForm()">リセット</button>
+  </div>
+</div>
+
+<!-- Output overlay — clean preview + copy only -->
+<div class="output-overlay" id="outputOverlay">
+  <div class="output-card">
+    <button class="output-close" onclick="closeOutput()">&times;</button>
+    <div class="section-label">Output — 登録データ</div>
+    <div id="outputContent"></div>
+    <button class="copy-btn" id="copyBtn" onclick="copyOutput()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+      コピー
+    </button>
+  </div>
+</div>
+
+<script>
+// ── Yen formatting ──
+function formatYen(v){const n=v.replace(/[^\d]/g,'');return n?Number(n).toLocaleString('ja-JP'):'';}
+function formatYenDisplay(v){const f=formatYen(v);return f?f+'円':'';}
+document.querySelectorAll('.yen-input').forEach(i=>{i.addEventListener('input',function(){const p=this.selectionStart,b=this.value.length;this.value=formatYen(this.value);const a=this.value.length;this.setSelectionRange(p+(a-b),p+(a-b));});});
+
+// ── Time picker ──
+const allTimes=[];for(let h=0;h<24;h++)for(let m=0;m<60;m+=15)allTimes.push(`${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}`);
+function initTimePicker(w){
+  const c=w.getAttribute('data-center')||'12:00';w._value='';
+  const d=document.createElement('div');d.className='time-display empty';d.textContent='--:--';d.tabIndex=0;w.appendChild(d);
+  const dd=document.createElement('div');dd.className='time-dropdown';
+  allTimes.forEach(t=>{const o=document.createElement('div');o.className='time-option';o.textContent=t;
+    o.addEventListener('click',()=>{w._value=t;d.textContent=t;d.classList.remove('empty');dd.querySelectorAll('.time-option').forEach(x=>x.classList.remove('selected'));o.classList.add('selected');dd.classList.remove('open');d.classList.remove('active');});
+    dd.appendChild(o);});
+  w.appendChild(dd);
+  d.addEventListener('click',e=>{e.stopPropagation();const open=dd.classList.contains('open');closeAllDropdowns();
+    if(!open){dd.classList.add('open');d.classList.add('active');const tgt=w._value||c;const idx=allTimes.indexOf(tgt);if(idx>=0){const el=dd.children[idx];dd.scrollTop=el.offsetTop-(dd.clientHeight/2)+(el.offsetHeight/2);}}});
+}
+function closeAllDropdowns(){document.querySelectorAll('.time-dropdown.open').forEach(d=>d.classList.remove('open'));document.querySelectorAll('.time-display.active').forEach(d=>d.classList.remove('active'));}
+document.addEventListener('click',closeAllDropdowns);
+document.querySelectorAll('.time-picker-wrap').forEach(initTimePicker);
+function getTP(id){const w=document.getElementById(id);return w?(w._value||''):'';}
+function resetTP(id){const w=document.getElementById(id);if(!w)return;w._value='';const d=w.querySelector('.time-display');d.textContent='--:--';d.classList.add('empty');w.querySelectorAll('.time-option').forEach(o=>o.classList.remove('selected'));}
+
+// ── Handlers ──
+function handleVenueChange(){const w=document.getElementById('venueOtherWrap');if(document.getElementById('venueSelect').value==='__other__'){w.classList.add('show');document.getElementById('venueOther').focus();}else{w.classList.remove('show');document.getElementById('venueOther').value='';}}
+function handleUketsukeChange(){const w=document.getElementById('externalUrlWrap');if(document.getElementById('uketsukeExternal').checked){w.classList.add('show');document.getElementById('eventUrl').focus();}else{w.classList.remove('show');document.getElementById('eventUrl').value='';}}
+function handlePriceOther(){const w=document.getElementById('priceOtherWrap');if(document.getElementById('priceOther').checked){w.classList.add('show');document.getElementById('priceOtherInput').focus();}else{w.classList.remove('show');document.getElementById('priceOtherInput').value='';}}
+function toggleEnkai(){document.getElementById('enkaiDetails').classList.toggle('open',document.getElementById('enkaiYes').checked);}
+
+function gv(id){const el=document.getElementById(id);return el?el.value.trim():'';}
+function gr(name){const c=document.querySelector(`input[name="${name}"]:checked`);return c?c.value:'';}
+function getPrices(){
+  const p=[];['price1class','price2class','price3class','priceDonation'].forEach(id=>{const el=document.getElementById(id);if(el.checked)p.push(el.value);});
+  if(document.getElementById('priceOther').checked){const r=gv('priceOtherInput');if(r)p.push(formatYenDisplay(r));}return p;
+}
+function getVenue(){const v=document.getElementById('venueSelect').value;return v==='__other__'?gv('venueOther'):v;}
+function getUketsuke(){const t=gr('uketsuke');if(t==='外部サイト'){const u=gv('eventUrl');return u?`外部サイト (${u})`:'外部サイト';}return 'クレヨガ';}
+
+// Store plain text for copy
+let _plainText='';
+
+function generateOutput(){
+  const name=gv('eventName'),date=gv('eventDate'),venue=getVenue();
+  if(!name||!date||!venue){alert('イベント名、開催日、開催場所は必須です。');return;}
+  const uketsuke=getUketsuke(),rel=gv('releaseDate'),mat=gr('mat'),enkai=gr('enkai'),prices=getPrices(),notes=gv('notes');
+  const lessons=[];
+  for(let i=1;i<=3;i++){const time=getTP(`tp-lesson${i}`),sess=gv(`lesson${i}Session`),cap=gv(`lesson${i}Cap`),desc=gv(`lesson${i}Desc`);if(time||desc)lessons.push({part:i,time,sess,cap,desc});}
+
+  // Build HTML preview
+  let h='';
+  const items=[['イベント名',name],['開催日',date],['開催場所',venue],['受付サイト',uketsuke],['マット',mat]];
+  if(rel)items.push(['情報解禁日',rel]);
+  items.forEach(([k,v])=>{h+=`<div class="output-item"><span class="output-key">${k}</span><span class="output-val">${v}</span></div>`;});
+  if(prices.length){h+=`<div class="output-sub-title">参加費</div>`;prices.forEach(p=>{h+=`<div class="output-item"><span class="output-val" style="text-align:left">${p}</span></div>`;});}
+  if(lessons.length){h+=`<div class="output-sub-title">レッスン内容</div>`;lessons.forEach(l=>{
+    const meta=[l.time,l.sess].filter(Boolean).join(' / ');
+    h+=`<div class="output-item"><span class="output-key">第${l.part}部 ${meta}</span><span class="output-val">${l.desc}${l.cap?` (定員${l.cap}名)`:''}</span></div>`;
+  });}
+  if(enkai==='あり'){
+    h+=`<div class="output-sub-title">宴会</div>`;
+    const ep=gv('enkaiPlace'),et=getTP('tp-enkai'),ec=gv('enkaiCap'),ef=gv('enkaiFee');
+    if(ep)h+=`<div class="output-item"><span class="output-key">場所</span><span class="output-val">${ep}</span></div>`;
+    if(et)h+=`<div class="output-item"><span class="output-key">開始時間</span><span class="output-val">${et}</span></div>`;
+    if(ec)h+=`<div class="output-item"><span class="output-key">定員</span><span class="output-val">${ec}名</span></div>`;
+    if(ef)h+=`<div class="output-item"><span class="output-key">参加費</span><span class="output-val">${formatYenDisplay(ef)}</span></div>`;
+  }
+  if(notes){h+=`<div class="output-sub-title">備考</div><div class="output-item"><span class="output-val" style="text-align:left">${notes}</span></div>`;}
+  document.getElementById('outputContent').innerHTML=h;
+
+  // Build plain text (hidden, for copy)
+  let p=`イベント名: ${name}\n開催日: ${date}\n開催場所: ${venue}\n受付サイト: ${uketsuke}\nマット: ${mat}\n`;
+  if(rel)p+=`情報解禁日: ${rel}\n`;
+  if(prices.length){p+=`\n参加費:\n`;prices.forEach(x=>p+=`  ${x}\n`);}
+  if(lessons.length){p+=`\nレッスン内容:\n`;lessons.forEach(l=>{const meta=[l.time,l.sess].filter(Boolean).join(' / ');p+=`  第${l.part}部 ${meta} — ${l.desc}`;if(l.cap)p+=` (定員${l.cap}名)`;p+='\n';});}
+  if(enkai==='あり'){p+=`\n宴会: あり\n`;const ep=gv('enkaiPlace'),et=getTP('tp-enkai'),ec=gv('enkaiCap'),ef=gv('enkaiFee');if(ep)p+=`  場所: ${ep}\n`;if(et)p+=`  開始時間: ${et}\n`;if(ec)p+=`  定員: ${ec}名\n`;if(ef)p+=`  参加費: ${formatYenDisplay(ef)}\n`;}else{p+=`宴会: なし\n`;}
+  if(notes)p+=`\n備考: ${notes}\n`;
+  _plainText=p;
+
+  document.getElementById('outputOverlay').classList.add('active');
+}
+
+function closeOutput(){document.getElementById('outputOverlay').classList.remove('active');}
+function copyOutput(){
+  navigator.clipboard.writeText(_plainText).then(()=>{
+    const b=document.getElementById('copyBtn');b.classList.add('copied');
+    b.innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> コピー完了';
+    setTimeout(()=>{b.classList.remove('copied');b.innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> コピー';},2000);
+  });
+}
+function resetForm(){
+  if(!confirm('入力内容をリセットしますか？'))return;
+  document.querySelectorAll('input[type="text"],input[type="date"],input[type="number"],input[type="url"],textarea').forEach(el=>el.value='');
+  document.querySelectorAll('select').forEach(s=>s.selectedIndex=0);
+  ['tp-lesson1','tp-lesson2','tp-lesson3','tp-enkai'].forEach(resetTP);
+  document.getElementById('venueSelect').selectedIndex=0;
+  document.querySelectorAll('input[type="checkbox"]').forEach(el=>el.checked=false);
+  document.getElementById('matRental').checked=true;
+  document.getElementById('enkaiNo').checked=true;
+  document.getElementById('uketsukeKure').checked=true;
+  document.getElementById('enkaiDetails').classList.remove('open');
+  document.getElementById('venueOtherWrap').classList.remove('show');
+  document.getElementById('externalUrlWrap').classList.remove('show');
+  document.getElementById('priceOtherWrap').classList.remove('show');
+}
+document.getElementById('outputOverlay').addEventListener('click',function(e){if(e.target===this)closeOutput();});
+</script>
+</body>
+</html>
