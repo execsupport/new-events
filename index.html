@@ -334,9 +334,12 @@ const venueAreaMap = {
 };
 function inferArea(venue){if(!venue)return '';return venueAreaMap[venue]||'';}
 
+// Notion DB会場選択肢に存在する値のみ送信。手入力（その他）は空で送り、fullDetailsに実値を記録
+const VENUE_OPTIONS = ['IGNITE 原宿','IGNITE 下北','IGNITE 京都','INTEX 大阪','SETSUKO JUICE','代々木公園','桃谷スタジオ','長慶院','伝七邸','四日市中央緑地運動施設','長久寺','CLiP HIROSHIMA','参宮橋スタジオ','Grande Cielo Tokyo','HOT40YOGA 新潟黒埼店','新潟市黒埼市民会館','新潟市東区プラザ','新潟市天寿園','新潟市中央区','皇居周辺','オンライン','その他'];
+
 function buildFullDetails(data){
   let t='';
-  t+=`【イベント名】${data.eventName}\n【開催日】${data.eventDate}\n【開催場所】${data.venue}\n`;
+  t+=`【イベント名】${data.eventName}\n【開催日】${data.eventDate}\n【開催場所】${data.venueDisplay||data.venue}\n`;
   if(data.area)t+=`【エリア】${data.area}\n`;
   t+=`【受付サイト】${data.uketsuke}\n`;
   if(data.releaseDate)t+=`【情報解禁日】${data.releaseDate}\n`;
@@ -350,8 +353,13 @@ function buildFullDetails(data){
 }
 
 function buildPayload(){
-  const name=gv('eventName'),date=gv('eventDate'),venue=getVenue();
-  if(!name||!date||!venue){alert('イベント名、開催日、開催場所は必須です。');return null;}
+  const name = gv('eventName'), date = gv('eventDate'), venueRaw = getVenue();
+  if(!name || !date || !venueRaw){
+    alert('イベント名、開催日、開催場所は必須です。');
+    return null;
+  }
+  // Notion Statusフィールドは既存選択肢のみ受付。該当なしは空で送り、詳細欄に実値を入れる
+  const venue = VENUE_OPTIONS.includes(venueRaw) ? venueRaw : '';
   const uketsuke=getUketsuke();
   const mat=gr('mat')||'マット貸出あり';
   const party=gr('enkai')||'なし';
@@ -367,8 +375,8 @@ function buildPayload(){
   const enkaiFeeRaw=gv('enkaiFee');
   const enkaiFee=enkaiFeeRaw?formatYenDisplay(enkaiFeeRaw):'';
   const enkaiNote=gv('enkaiNote');
-  const area=inferArea(venue);
-  const data={eventName:name,eventDate:date,area,venue,category:'クレヨガ',status:'受付開始前',capacity:totalCap||'',price:priceStr,mat,party,partyDetails:enkaiNote,registrationUrl,releaseDate,notes,uketsuke,prices,lessons,enkaiPlace,enkaiTime,enkaiCap,enkaiFee,enkaiNote};
+  const area=inferArea(venueRaw);
+  const data={eventName:name,eventDate:date,area,venue,venueDisplay:venueRaw,category:'クレヨガ',status:'受付開始前',capacity:totalCap||'',price:priceStr,mat,party,partyDetails:enkaiNote,registrationUrl,releaseDate,notes,uketsuke,prices,lessons,enkaiPlace,enkaiTime,enkaiCap,enkaiFee,enkaiNote};
   data.fullDetails=buildFullDetails(data);
   return data;
 }
